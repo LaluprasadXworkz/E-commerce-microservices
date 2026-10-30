@@ -1,3 +1,9 @@
 spring:
   application:
     name: ecom-product-service
+
+
+
+server:
+  port: 8081
+
