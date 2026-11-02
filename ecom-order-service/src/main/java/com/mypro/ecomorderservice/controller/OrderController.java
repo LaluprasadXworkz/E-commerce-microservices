@@ -1,25 +1,24 @@
 package com.mypro.ecomorderservice.controller;
 
+import com.mypro.ecomorderservice.dto.ProductDto;
 import com.mypro.ecomorderservice.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
+@RequiredArgsConstructor
 public class OrderController {
-
 
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
+    @PostMapping
+    public String addOrder(@RequestBody ProductDto productDto) {
+        return orderService.addOrder(productDto);
     }
 
-
-    @PostMapping("/{orderId}")
-    public String placeOrder(@PathVariable("orderId") String id) {
-        return orderService.placeOrder(id);
+    @GetMapping("/{productId}")
+    public String placeOrder(@PathVariable String productId) {
+        return orderService.placeOrder(productId);
     }
-
-
-
 }
