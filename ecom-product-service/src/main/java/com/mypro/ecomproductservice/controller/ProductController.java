@@ -1,26 +1,25 @@
+
 package com.mypro.ecomproductservice.controller;
 
+import com.mypro.ecomproductservice.dto.ProductDto;
 import com.mypro.ecomproductservice.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    @PostMapping
+    public ProductDto addProduct(@RequestBody ProductDto productDto) {
+        return productService.addProduct(productDto);
     }
-
-    @GetMapping("/{id}")
-    public String getProductById(@PathVariable("id") String id) {
-        return productService.getProductById(id);
-    }
-
-
-
+//
+//    @GetMapping("/{id}")
+//    public ProductDto getProductById(@PathVariable Long id) {
+//        return productService.getProductById(id);
+//    }
 }
