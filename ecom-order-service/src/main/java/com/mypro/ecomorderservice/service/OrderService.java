@@ -22,22 +22,8 @@ public class OrderService {
 
     public String placeOrder(String id) {
         System.out.println("calling product service");
-//        String product =   restTemplate.getForObject("http://localhost:8081/products/" + id, String.class);
-
-      ResponseEntity<String> product =  restClient.get()
-              .uri("http://localhost:8081/products/" + id)
-              .retrieve()
-              .toEntity(
-                      String.class
-              );
-
-        System.out.println(product.getBody());
-        System.out.println(product.getStatusCode());
-        System.out.println(product.getHeaders());
-        System.out.println(product.getHeaders().get("Content-Type"));
-        System.out.println(product.getHeaders().get("Content-Length"));
-
-       return  "IN Stock".equals(product.getBody()) ?"Order placed":"Product Out od Stock";
+        String product =   restTemplate.getForObject("http://localhost:8081/products/" + id, String.class);
+        return  "IN Stock".equals(product) ?"Order placed":"Product Out od Stock";
 
     }
 
