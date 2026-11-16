@@ -3,27 +3,24 @@ package com.mypro.ecomproductservice.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name = "products_info")
+import java.math.BigDecimal;
 
-public class ProductEntity {
+@Entity
+@Table(name = "products")
+@Data
+public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_name")
+    @Column(nullable = false)
     private String productName;
 
-    @Column(name = "price")
-    private double price;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
-    @Column(name = "category")
     private String category;
 
-    @Column(name = "stock")
     private Long stock;
-
-
-
 }
