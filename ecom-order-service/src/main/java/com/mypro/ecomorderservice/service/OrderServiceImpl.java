@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,14 +21,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order placeOrder(CreateOrderRequest request) {
+        ProductDto product =
+                productClient.getProductById(request.getProductId());
+        BigDecimal totalAmount = product.getPrice()
+                .multiply(BigDecimal.valueOf(request.getQuantity()));
 
-        // 1. Fetch product details from Product Service
-        ProductDto product = productClient.getProductById(request.getProductId());
-
-        // 2. Calculate total amount
-        BigDecimal totalAmount = product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity()));
-
-        // 3. Create Order entity
         Order order = new Order();
 
         order.setProductId(product.getId());
@@ -35,8 +33,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPrice(product.getPrice());
         order.setQuantity(request.getQuantity());
         order.setTotalAmount(totalAmount);
-
-        // 4. Save order in Order Service database
+        order.setOrderDate(LocalDateTime.now());
         return orderRepository.save(order);
     }
 
