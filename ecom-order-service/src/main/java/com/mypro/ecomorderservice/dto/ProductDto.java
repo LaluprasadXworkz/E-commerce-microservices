@@ -1,13 +1,15 @@
 package com.mypro.ecomorderservice.dto;
 
-
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 public class ProductDto {
+
     private Long id;
     private String productName;
-    private double price;
+    private BigDecimal price;
     private String category;
     private Long stock;
 }
