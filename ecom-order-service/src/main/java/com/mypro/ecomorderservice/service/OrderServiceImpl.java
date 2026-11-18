@@ -21,13 +21,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order placeOrder(CreateOrderRequest request) {
-        ProductDto product =
-                productClient.getProductById(request.getProductId());
-        BigDecimal totalAmount = product.getPrice()
-                .multiply(BigDecimal.valueOf(request.getQuantity()));
-
+        ProductDto product = productClient.getProductById(request.getProductId());
+        BigDecimal totalAmount = product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity()));
         Order order = new Order();
-
         order.setProductId(product.getId());
         order.setProductName(product.getProductName());
         order.setPrice(product.getPrice());
@@ -39,13 +35,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(Long id) {
-
         return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found: " + id));
     }
 
     @Override
     public List<Order> getAllOrders() {
-
         return orderRepository.findAll();
     }
 }

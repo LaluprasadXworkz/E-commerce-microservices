@@ -19,21 +19,17 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Order> placeOrder(@RequestBody CreateOrderRequest request) {
-
         Order order = orderService.placeOrder(request);
-
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
-
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 }
