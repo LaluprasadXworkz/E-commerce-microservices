@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: ecom-api-gateway
@@ -7,22 +10,55 @@ spring:
       server:
         webmvc:
           routes:
+
+            # Product Service business APIs
             - id: product-service-route
               uri: lb://ecom-product-service
               predicates:
                 - Path=/api/products/**
 
+            # Order Service business APIs
             - id: order-service-route
               uri: lb://ecom-order-service
               predicates:
                 - Path=/api/orders/**
 
-server:
-  port: 8080
+            # Product Service Swagger documentation
+            - id: product-openapi-route
+              uri: lb://ecom-product-service
+              predicates:
+                - Path=/product/v3/api-docs
+              filters:
+                - StripPrefix=1
+
+            # Order Service Swagger documentation
+            - id: order-openapi-route
+              uri: lb://ecom-order-service
+              predicates:
+                - Path=/order/v3/api-docs
+              filters:
+                - StripPrefix=1
 
 eureka:
+  instance:
+    prefer-ip-address: true
+
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+    urls:
+      - name: Product Service
+        url: /product/v3/api-docs
+
+      - name: Order Service
+        url: /order/v3/api-docs
+
+    urls-primary-name: Product Service
+    disable-swagger-default-url: true
