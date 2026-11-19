@@ -1,3 +1,28 @@
 spring:
   application:
     name: ecom-api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: product-service-route
+              uri: lb://ecom-product-service
+              predicates:
+                - Path=/api/products/**
+
+            - id: order-service-route
+              uri: lb://ecom-order-service
+              predicates:
+                - Path=/api/orders/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
