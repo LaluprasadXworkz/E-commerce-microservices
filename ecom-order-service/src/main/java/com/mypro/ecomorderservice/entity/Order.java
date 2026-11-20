@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
@@ -23,4 +24,6 @@ public class Order {
     private Long quantity;
 
     private BigDecimal totalAmount;
+
+    private LocalDateTime orderDate;
 }

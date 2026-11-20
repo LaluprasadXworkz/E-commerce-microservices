@@ -18,29 +18,23 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto saveProduct(ProductDto productDto) {
 
         Product product = new Product();
-
         product.setProductName(productDto.getProductName());
         product.setPrice(productDto.getPrice());
         product.setCategory(productDto.getCategory());
         product.setStock(productDto.getStock());
-
         Product savedProduct = productRepository.save(product);
-
         return convertToDto(savedProduct);
     }
 
     @Override
     public ProductDto getProductById(Long id) {
-
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found: " + id));
-
         return convertToDto(product);
     }
 
     @Override
     public List<ProductDto> getAllProducts() {
-
         return productRepository.findAll()
                 .stream()
                 .map(this::convertToDto)
@@ -49,10 +43,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto updateProduct(Long id, ProductDto productDto) {
-
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found: " + id));
-
         product.setProductName(productDto.getProductName());
         product.setPrice(productDto.getPrice());
         product.setCategory(productDto.getCategory());
@@ -74,9 +66,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private ProductDto convertToDto(Product product) {
-
         ProductDto productDto = new ProductDto();
-
         productDto.setId(product.getId());
         productDto.setProductName(product.getProductName());
         productDto.setPrice(product.getPrice());
